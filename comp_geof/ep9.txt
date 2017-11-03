@@ -1,0 +1,8 @@
+rem surface -T0.35 topo.dat -Gtopo1.grd -R0/360/-90/90 -I0.1 -V -H29
+makecpt -T-10720/8270/10 -Chaxby -Z >topo.cor 
+grdgradient topo1.grd -Ggrad.grd -A310 -N -V
+grdhisteq grad.grd -Ghist.grd -N -V
+grdmath hist.grd 0.4 MUL = hist1.grd 
+grdimage -Ihist1.grd -Ctopo.cor topo1.grd -JW-80/10i -B0 -K > topo.ps
+pscoast -O -R0/360/-90/90 -Nall/0.2q/0 -W0.2p -Df -A10000 -JW -K >>topo.ps
+psscale -I -Ctopo.cor -B2000f4 -O -D5i/6.0i/8i/0.25h  >>topo.ps

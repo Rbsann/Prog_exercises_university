@@ -1,0 +1,25 @@
+pscoast -R0/360/-90/90 -JW-80/7i -Nall/0.2p/0 -Df -A10000 -K -Scyan -Glightbrown -W0.2p/0 > mapa.ps
+type sismos19+.dat | gawk "{if($3<=50.0) print $1,$2,$3}"> sismos_menor_so.dat
+type sismos19+.dat | gawk "{if($3<=100.0 && $3>50.0) print $1,$2,$3}"> sismos-50-100.dat
+type sismos19+.dat | gawk "{if($3<=150.0 && $3>100.0) print $1,$2,$3}"> sismos-100-150.dat
+type sismos19+.dat | gawk "{if($3<=300.0 && $3>150.0) print $1,$2,$3}"> sismos-150-300.dat
+type sismos19+.dat | gawk "{if($3<=500 && $3>300.0) print $1,$2,$3}"> sismos-300-500.dat
+type sismos19+.dat | gawk "{if($3>500.0) print $1,$2,$3}"> sismos-500.dat
+psxy sismos_menor_so.dat -Sp -W1p/purple -R -JW -O -K -: >>mapa.ps
+psxy sismos-50-100.dat -Sp -W1p/blue -R -JW -O -K -: >>mapa.ps
+psxy sismos-100-150.dat -Sp -W1p/green -R -JW -O -K -: >>mapa.ps
+psxy sismos-150-300.dat -Sp -W1p/yellow -R -JW -O -K -: >>mapa.ps
+psxy sismos-300-500.dat -Sp -W1p/orange -R -JW -O -K -: >>mapa.ps
+psxy sismos-500.dat -Sp -W1p/red -R -JW -O -: >>mapa.ps
+
+
+
+
+
+
+
+
+
+
+
+

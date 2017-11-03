@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        #entrada{
+            border:50px;
+        }
+   #map {
+    height: 400px;
+    width:100%;
+    
+  }
+        
+</style>
+    </head>
+<body>
+    <div id="entrada">
+<input type='file' accept='text/plain' onchange='openFile(event)'><br>
+</div>
+<div id="map"></div>
+<script>
+
+var openFile = function(event) {
+    var input = event.target;
+
+    var reader = new FileReader();
+    reader.onload = function(){
+    var text = reader.result.split('\n');
+    placeMarkers(text);
+    //console.log(reader.result.substring(0,20));
+    //console.log(typeof(text));
+    //console.log(text[0]);
+    };
+    reader.readAsText(input.files[0]);
+  };
+
+var map;
+function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: 30, lng: 0},
+          zoom: 3
+        });
+}
+    
+function placeMarkers(text)
+    {
+   
+    for( var i = 0;  i < text.length; i++ ) { 
+        
+        var segments = text[i].split(' ');
+        var intensidade = parseFloat(segments[2]);
+        var lat = parseFloat(segments[1]);
+        var lng = parseFloat(segments[0]);
+        var location={lat,lng};
+        console.log(lat);
+        console.log(lng);
+        console.log(intensidade);
+
+      
+       var positions = {
+        map: map,
+         position:location,
+         icon: setIcon(intensidade)
+    };
+    
+
+    function setIcon(intensidade) {
+        var icons = {
+            0:'http://maps.google.com/mapfiles/kml/pal3/icon57.png',
+            1:'http://maps.google.com/mapfiles/kml/pal3/icon8.png',
+            2:'http://maps.google.com/mapfiles/kml/pal3/icon9.png',
+            3:'http://maps.google.com/mapfiles/kml/pal3/icon10.png',
+            4:'http://maps.google.com/mapfiles/kml/pal3/icon11.png',
+            5:'http://maps.google.com/mapfiles/kml/pal3/icon12.png',
+            6:'http://maps.google.com/mapfiles/kml/pal3/icon13.png',
+            7:'http://maps.google.com/mapfiles/kml/pal3/icon14.png',
+            8:'http://maps.google.com/mapfiles/kml/pal3/icon15.png',
+            9:'http://maps.google.com/mapfiles/kml/pal3/icon16.png',
+         }
+       
+        return icons[Math.floor(intensidade)]
+        }
+
+    // Add the marker for the earthquake
+    var marker = new google.maps.Marker(positions);
+
+};
+    };
+</script> 
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCTRMDK9qncMynrv-rpWAWouwWY1ct5D3Q&callback=initMap"
+    async defer></script>
+
+
+    </body>
+
+
+
+
+
+
+
+
+
+
+
+
+</html>
